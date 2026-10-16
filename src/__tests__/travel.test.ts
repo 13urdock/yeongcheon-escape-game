@@ -1,6 +1,6 @@
 // __tests__/travel.test.ts — 이동비용(차 렌트·한의 감소·시청↔시장 0), 마감·개방·숨은 edge, 고립 판정, 활동
 import { describe, expect, it } from 'vitest';
-import { availableEdges, checkLodgingDeadline, computeTravelCost, doActivity, travelTo, useItem } from '../engine';
+import { availableActivities, availableEdges, checkLodgingDeadline, computeTravelCost, doActivity, travelTo, useItem } from '../engine';
 import { makeContent, makeState } from './helpers';
 
 const content = makeContent();
@@ -36,6 +36,11 @@ describe('travelTo', () => {
     expect(found.matched).toBe(true);
     expect(travelTo(found.state, 'bonglimsa', content).nextSceneId).toBe('bonglimsa_arrival');
   });
+  it('진입 씬이 아닌 하위 씬(돌아다니기·이벤트)에서는 이동 목록이 비고 이동도 막힌다', () => {
+    const s = makeState(content, { currentSceneId: 'start' }); // start는 cityhall 소속이지만 진입 씬이 아님
+    expect(availableEdges(s, content)).toEqual([]);
+    expect(travelTo(s, 'market', content).blocked).toBe('no_edge');
+  });
   it('22:00을 넘기면 time_over', () => {
     expect(travelTo(makeState(content, { timeMinutes: 1300 }), 'bohyeonsan', content).blocked).toBe('time_over');
     expect(travelTo(makeState(content, { timeMinutes: 1300 }), 'market', content).blocked).toBeUndefined();
@@ -64,6 +69,10 @@ describe('doActivity', () => {
     const r = doActivity(makeState(content, { currentSceneId: 'bohyeonsan_arrival' }), 'hike', content);
     expect(r.state.timeMinutes).toBe(600);
     expect(r.state.flags.trust).toBe(1);
+  });
+  it('진입 씬이 아니면 할 일 목록이 비고 수행도 막힌다', () => {
+    expect(availableActivities(makeState(content, { currentSceneId: 'bohyeonsan_walk' }), content)).toEqual([]);
+    expect(doActivity(makeState(content, { currentSceneId: 'bohyeonsan_walk' }), 'hike', content).blocked).toBe('not_found');
   });
   it('마감을 넘기면 time_over', () => {
     expect(doActivity(makeState(content, { currentSceneId: 'bohyeonsan_arrival', timeMinutes: 1300 }), 'hike', content).blocked).toBe('time_over');

@@ -58,6 +58,10 @@ export interface Place {
   openFrom?: number;        // 개방 시각(분). 없으면 상시
   openUntil?: number;       // 운영 종료(분). 없으면 상시
   entrySceneId?: string;    // 이동 도착 시 진입 씬. 없으면 `${id}_arrival` 규약
+  // 활동 운영 시간(분). 밖이면 도착은 가능하지만 활동이 숨겨지고 진입 씬에 영업 종료 문구가 붙는다.
+  // (openFrom/openUntil은 '도착 자체'를 막는 출입 시간 — 예: 봉림사 05:00)
+  operatingHours?: { from: number; to: number };
+  closedText?: string;      // 운영 시간 밖 도착 본문. 없으면 normalText + CLOSED_NOTICE
 }
 
 export interface Choice {
@@ -77,6 +81,7 @@ export interface Scene {
   snakeText?: string;
   choices: Choice[];
   snakeChoices?: Choice[];
+  snakeCanAppear?: boolean; // 씬 단위 백사 굴림 여부(장소 값 override). 예: 시청은 도착엔 없고 내부 지점 씬에서만 20%
   triggerCondition?: FlagCondition; // 같은 placeId 진입 시 조건 만족하면 이 씬으로 대체 진입(미방문 씬만)
   isEnding: boolean;
   endingType?: EndingType;
@@ -100,6 +105,30 @@ export interface ItemUseRule {
   consumeItem?: boolean;
 }
 
+// 무작위 만남 (강아지·고양이 등). 이동으로 장소에 도착할 때만 굴린다.
+// 템플릿 씬은 placeIds 장소마다 `${placeId}__${templateId}`로 복제되고,
+// 선택지 nextSceneId의 '$arrival'은 그 장소의 진입 씬으로 바뀐다.
+export type EncounterSceneTemplate = Omit<Scene, 'placeId'>;
+
+export interface EncounterDef {
+  id: string;
+  placeIds: string[];
+  chance: number;              // 0~1
+  pityAfter?: number;          // 연속 N번 빗나가면 다음 굴림은 확정 (빗나감 횟수는 flags.encounter_miss_<id>)
+  requires?: FlagCondition;    // 굴림 조건 (예: 동행 없음)
+  scenes: EncounterSceneTemplate[]; // 등장 시 이 중 하나를 균등 선택
+}
+
+// 조립 후 런타임 형태: 장소별 복제된 씬 id 목록
+export interface Encounter {
+  id: string;
+  placeIds: string[];
+  chance: number;
+  pityAfter?: number;
+  requires?: FlagCondition;
+  sceneIdsByPlace: Record<string, string[]>;
+}
+
 export interface GameContent {
   items: Record<string, Item>;
   characters: Record<string, Character>;
@@ -107,5 +136,6 @@ export interface GameContent {
   scenes: Record<string, Scene>;
   branchRules: Record<string, BranchRule>;
   itemUseRules: ItemUseRule[];
+  encounters: Encounter[];
   startSceneId: string;
 }

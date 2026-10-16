@@ -8,7 +8,7 @@ export const TRAVEL_COST_CAR = 10;   // 차 렌트 시 edge당 이동(분)
 export const ACTIVITY_COST = 60;     // 활동 기본(분) — durationMinutes 없을 때
 export const HANUI_DISCOUNT = 10;    // 한의 체험 시 당일 이동 감소(분)
 export const SNAKE_CHANCE = 0.2;     // 백사 확률 등장
-export const SNAKE_FIXED_TIME = 1200; // 20:00 — 출렁다리/짚라인 백사 확정 등장 시각
+export const SNAKE_FIXED_TIME = 1200; // 20:00 — 출렁다리/짚라인 백사 확정 등장 시각 (운영 09~17시, 영업 종료 후 백사)
 export const MAX_STRIKES = 3;
 export const SAVE_KEY = 'yeongcheon_save_v1';
 export const SAVE_VERSION = 1;
@@ -21,5 +21,10 @@ export const FLAG_TRAVEL_DISCOUNT = 'travel_discount_today'; // 값(분)만큼 �
 export const ITEM_DOG = 'dog';
 export const ITEM_CAT = 'cat';
 
+// 무작위 만남
+export const ARRIVAL_PLACEHOLDER = '$arrival';        // 만남 템플릿 선택지에서 '그 장소 진입 씬'을 뜻함
+export const encounterMissFlag = (id: string) => `encounter_miss_${id}`;
+
 // UI 문구
+export const CLOSED_NOTICE = '지금은 운영 시간이 아니다.';
 export const NO_REACTION_TEXT = '지금은 쓸 수 없을 것 같다.';

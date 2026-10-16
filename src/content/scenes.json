@@ -76,7 +76,21 @@
     "placeId": "eunhaesa",
     "isEnding": false,
     "normalText": "[TODO] 은해사 도착 본문 (백사 미등장)",
-    "choices": [],
+    "choices": [
+      {
+        "id": "eunhaesa_sleep",
+        "text": "템플스테이로 하룻밤 묵는다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "nextDay",
+            "wakeMinutes": 300,
+            "wakePlaceId": "eunhaesa"
+          }
+        ],
+        "nextSceneId": "eunhaesa_dawn_prayer"
+      }
+    ],
     "snakeText": "[TODO] 은해사 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
     "snakeChoices": [
       {
@@ -102,6 +116,44 @@
     ]
   },
   {
+    "id": "eunhaesa_dawn_prayer",
+    "placeId": "eunhaesa",
+    "isEnding": false,
+    "normalText": "[TODO] 새벽 5시. 목탁 소리에 눈을 뜬다. 새벽 예불이 시작된다.",
+    "choices": [
+      {
+        "id": "dawn_prayer_join",
+        "text": "새벽 예불에 참여한다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "advanceTime",
+            "minutes": 60
+          },
+          {
+            "type": "setFlag",
+            "key": "attended_dawn_prayer",
+            "value": true,
+            "overlay": "새벽 예불을 마쳤다"
+          }
+        ],
+        "nextSceneId": "eunhaesa_arrival"
+      },
+      {
+        "id": "dawn_prayer_skip",
+        "text": "조금 더 잔다 (09:00까지)",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "advanceTime",
+            "minutes": 240
+          }
+        ],
+        "nextSceneId": "eunhaesa_arrival"
+      }
+    ]
+  },
+  {
     "id": "chwihari_arrival",
     "placeId": "chwihari",
     "isEnding": false,
@@ -117,24 +169,6 @@
           }
         ],
         "nextSceneId": "chwihari_arrival"
-      },
-      {
-        "id": "chwihari_dawn_plan",
-        "text": "내일 새벽 은해사 예불에 가기로 하고 일찍 잔다",
-        "isTrap": false,
-        "effects": [
-          {
-            "type": "nextDay",
-            "wakeMinutes": 300,
-            "wakePlaceId": "eunhaesa"
-          },
-          {
-            "type": "setFlag",
-            "key": "attended_dawn_prayer",
-            "value": true
-          }
-        ],
-        "nextSceneId": "eunhaesa_arrival"
       }
     ],
     "snakeText": "[TODO] 취하리 청년마을 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
@@ -166,7 +200,30 @@
     "placeId": "bonglimsa",
     "isEnding": false,
     "normalText": "[TODO] 봉림사 도착 본문 (백사 미등장)",
-    "choices": [],
+    "choices": [
+      {
+        "id": "bonglimsa_overhear",
+        "text": "[TODO] 스님들의 대화를 몰래 엿듣는다",
+        "isTrap": false,
+        "requires": {
+          "type": "not",
+          "condition": {
+            "type": "flagEquals",
+            "key": "overheard_monk_story",
+            "value": true
+          }
+        },
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "overheard_monk_story",
+            "value": true,
+            "overlay": "스님들의 이야기를 엿들었다"
+          }
+        ],
+        "nextSceneId": "bonglimsa_arrival"
+      }
+    ],
     "snakeText": "[TODO] 봉림사 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
     "snakeChoices": [
       {
@@ -228,8 +285,14 @@
     "normalText": "[TODO] 시장 도착 본문 (백사 미등장)",
     "choices": [
       {
-        "id": "market_buy_dog",
-        "text": "강아지를 데려간다 (포도알 3)",
+        "id": "market_walk_start",
+        "text": "돌아다닌다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      },
+      {
+        "id": "market_buy_telescope",
+        "text": "망원경을 산다 (포도알 3)",
         "isTrap": false,
         "requires": {
           "type": "and",
@@ -240,11 +303,7 @@
             },
             {
               "type": "notItem",
-              "itemId": "dog"
-            },
-            {
-              "type": "notItem",
-              "itemId": "cat"
+              "itemId": "telescope"
             }
           ]
         },
@@ -255,18 +314,43 @@
           },
           {
             "type": "addItem",
-            "itemId": "dog"
-          },
-          {
-            "type": "setCompanion",
-            "companion": "dog"
+            "itemId": "telescope"
           }
         ],
         "nextSceneId": "market_arrival"
       },
       {
-        "id": "market_buy_telescope",
-        "text": "망원경을 산다 (포도알 2)",
+        "id": "market_buy_car_rental",
+        "text": "렌터카를 산다 (포도알 5)",
+        "isTrap": false,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "grapesGte",
+              "amount": 5
+            },
+            {
+              "type": "notItem",
+              "itemId": "car_rental"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 5
+          },
+          {
+            "type": "addItem",
+            "itemId": "car_rental"
+          }
+        ],
+        "nextSceneId": "market_arrival"
+      },
+      {
+        "id": "market_buy_salt",
+        "text": "소금을 산다 (포도알 2)",
         "isTrap": false,
         "requires": {
           "type": "and",
@@ -277,7 +361,7 @@
             },
             {
               "type": "notItem",
-              "itemId": "telescope"
+              "itemId": "salt"
             }
           ]
         },
@@ -288,7 +372,36 @@
           },
           {
             "type": "addItem",
-            "itemId": "telescope"
+            "itemId": "salt"
+          }
+        ],
+        "nextSceneId": "market_arrival"
+      },
+      {
+        "id": "market_buy_red_bean",
+        "text": "팥을 산다 (포도알 2)",
+        "isTrap": false,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "grapesGte",
+              "amount": 2
+            },
+            {
+              "type": "notItem",
+              "itemId": "red_bean"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 2
+          },
+          {
+            "type": "addItem",
+            "itemId": "red_bean"
           }
         ],
         "nextSceneId": "market_arrival"
@@ -319,6 +432,140 @@
     ]
   },
   {
+    "id": "market_walk",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 주변을 걷는다. 어디로 가 볼까?",
+    "choices": [
+      {
+        "id": "market_walk_to_1",
+        "text": "[TODO] 시장 장소 1",
+        "isTrap": false,
+        "nextSceneId": "market_spot_1"
+      },
+      {
+        "id": "market_walk_to_2",
+        "text": "[TODO] 시장 장소 2",
+        "isTrap": false,
+        "nextSceneId": "market_spot_2"
+      },
+      {
+        "id": "market_walk_to_3",
+        "text": "[TODO] 시장 장소 3",
+        "isTrap": false,
+        "nextSceneId": "market_spot_3"
+      },
+      {
+        "id": "market_walk_to_4",
+        "text": "[TODO] 시장 장소 4",
+        "isTrap": false,
+        "nextSceneId": "market_spot_4"
+      },
+      {
+        "id": "market_walk_to_5",
+        "text": "[TODO] 시장 장소 5",
+        "isTrap": false,
+        "nextSceneId": "market_spot_5"
+      },
+      {
+        "id": "market_walk_to_6",
+        "text": "[TODO] 시장 장소 6",
+        "isTrap": false,
+        "nextSceneId": "market_spot_6"
+      },
+      {
+        "id": "market_walk_stop",
+        "text": "그만 돌아다닌다",
+        "isTrap": false,
+        "nextSceneId": "market_arrival"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_1",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 1 본문",
+    "choices": [
+      {
+        "id": "market_spot_1_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_2",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 2 본문",
+    "choices": [
+      {
+        "id": "market_spot_2_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_3",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 3 본문",
+    "choices": [
+      {
+        "id": "market_spot_3_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_4",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 4 본문",
+    "choices": [
+      {
+        "id": "market_spot_4_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_5",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 5 본문",
+    "choices": [
+      {
+        "id": "market_spot_5_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
+    "id": "market_spot_6",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 장소 6 본문",
+    "choices": [
+      {
+        "id": "market_spot_6_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "market_walk"
+      }
+    ]
+  },
+  {
     "id": "cityhall_arrival",
     "placeId": "cityhall",
     "isEnding": false,
@@ -326,7 +573,7 @@
     "choices": [
       {
         "id": "cityhall_sleep",
-        "text": "여기서 하룻밤 묵는다",
+        "text": "하룻밤 묵는다",
         "isTrap": false,
         "effects": [
           {
@@ -334,6 +581,12 @@
           }
         ],
         "nextSceneId": "cityhall_arrival"
+      },
+      {
+        "id": "cityhall_walk_start",
+        "text": "돌아다닌다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
       },
       {
         "id": "cityhall_final",
@@ -349,18 +602,143 @@
           }
         ]
       }
-    ],
-    "snakeText": "[TODO] 시청 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
-    "snakeChoices": [
+    ]
+  },
+  {
+    "id": "cityhall_walk",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 주변을 걷는다. 어디로 가 볼까?",
+    "choices": [
       {
-        "id": "cityhall_snake_use",
-        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
-        "isTrap": true,
-        "nextSceneId": "cityhall_arrival"
+        "id": "cityhall_walk_to_1",
+        "text": "[TODO] 시청 장소 1 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_1",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
       },
       {
-        "id": "cityhall_snake_notice",
-        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "id": "cityhall_walk_to_2",
+        "text": "[TODO] 시청 장소 2 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_2",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "cityhall_walk_to_3",
+        "text": "[TODO] 시청 장소 3 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_3",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "cityhall_walk_to_4",
+        "text": "[TODO] 시청 장소 4 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_4",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "cityhall_walk_to_5",
+        "text": "[TODO] 시청 장소 5 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_5",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "cityhall_walk_to_6",
+        "text": "[TODO] 시청 장소 6 (입장 포도알 1)",
+        "isTrap": false,
+        "nextSceneId": "cityhall_spot_6",
+        "requires": {
+          "type": "grapesGte",
+          "amount": 1
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "id": "cityhall_walk_stop",
+        "text": "그만 돌아다닌다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_arrival"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_1",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 1 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_1_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 1 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_1_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_1_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
         "isTrap": false,
         "effects": [
           {
@@ -370,7 +748,197 @@
             "overlay": "단서를 알아챘다"
           }
         ],
-        "nextSceneId": "cityhall_arrival"
+        "nextSceneId": "cityhall_walk"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_2",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 2 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_2_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 2 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_2_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_2_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_walk"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_3",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 3 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_3_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 3 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_3_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_3_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_walk"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_4",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 4 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_4_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 4 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_4_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_4_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_walk"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_5",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 5 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_5_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 5 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_5_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_5_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_walk"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_spot_6",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 장소 6 본문",
+    "choices": [
+      {
+        "id": "cityhall_spot_6_back",
+        "text": "다른 곳을 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "cityhall_walk"
+      }
+    ],
+    "snakeCanAppear": true,
+    "snakeText": "[TODO] 시청 장소 6 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_spot_6_snake_use",
+        "text": "[TODO] 이곳을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_walk"
+      },
+      {
+        "id": "cityhall_spot_6_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 나간다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_walk"
       }
     ]
   },
@@ -541,6 +1109,59 @@
           }
         ],
         "nextSceneId": "bonglimsa_arrival"
+      }
+    ]
+  },
+  {
+    "id": "cave_arrival",
+    "placeId": "cave",
+    "isEnding": false,
+    "normalText": "[TODO] 칠석날, 어두운 동굴 안. 강아지가 낮게 으르렁거린다.",
+    "choices": [
+      {
+        "id": "cave_fight",
+        "text": "[TODO] 강아지와 함께 백사에 맞선다",
+        "isTrap": false,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "hasItem",
+              "itemId": "dog"
+            },
+            {
+              "type": "not",
+              "condition": {
+                "type": "flagEquals",
+                "key": "defeated_snake_at_cave",
+                "value": true
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "defeated_snake_at_cave",
+            "value": true,
+            "overlay": "동굴에서 백사를 물리쳤다"
+          }
+        ],
+        "nextSceneId": "cave_victory"
+      }
+    ]
+  },
+  {
+    "id": "cave_victory",
+    "placeId": "cave",
+    "isEnding": false,
+    "normalText": "[TODO] 백사가 물러났다. 동굴에 고요가 찾아온다.",
+    "choices": [
+      {
+        "id": "cave_exit",
+        "text": "동굴 입구로 돌아간다",
+        "isTrap": false,
+        "nextSceneId": "cave_arrival"
       }
     ]
   },

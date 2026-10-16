@@ -15,8 +15,16 @@ export function computeTravelCost(state: GameState, baseCost: number): number {
   return Math.max(0, cost);
 }
 
-// 현재 장소에서 노출되는 이동 목록(requires 통과분)과 각 실제 비용.
+// 현재 씬이 그 장소의 진입 씬인지. 이동·할 일 목록은 진입 씬에서만 노출한다
+// (돌아다니기·이벤트 같은 하위 씬에서는 씬 선택지만 보이고, 선택지로 진입 씬에 돌아와야 떠날 수 있음).
+export function isEntryScene(state: GameState, content: GameContent): boolean {
+  const scene = content.scenes[state.currentSceneId];
+  return scene.id === entrySceneId(content.places[scene.placeId]);
+}
+
+// 현재 장소에서 노출되는 이동 목록(requires 통과분)과 각 실제 비용. 진입 씬이 아니면 빈 목록.
 export function availableEdges(state: GameState, content: GameContent): { edge: Edge; cost: number; name: string }[] {
+  if (!isEntryScene(state, content)) return [];
   const scene = content.scenes[state.currentSceneId];
   const place = content.places[scene.placeId];
   return place.connections

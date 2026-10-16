@@ -12,5 +12,19 @@
         "overlay": "봉림사를 발견했다"
       }
     ]
+  },
+  {
+    "id": "telescope_at_bonglimsa",
+    "itemId": "telescope",
+    "placeId": "bonglimsa",
+    "resultText": "[TODO] 망원경 너머, 산 중턱에 검은 동굴 입구가 보인다.",
+    "effects": [
+      {
+        "type": "setFlag",
+        "key": "found_cave",
+        "value": true,
+        "overlay": "동굴을 발견했다 (마지막 날, 강아지와 함께라면 갈 수 있다)"
+      }
+    ]
   }
 ]

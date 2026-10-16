@@ -84,7 +84,22 @@
         "travelCost": 30
       }
     ],
-    "activities": [],
+    "activities": [
+      {
+        "id": "observatory_tour",
+        "name": "천문과학관 둘러보기",
+        "durationMinutes": 60
+      },
+      {
+        "id": "stargazing",
+        "name": "별 보기",
+        "durationMinutes": 60,
+        "requires": {
+          "type": "timeAfter",
+          "minutes": 1200
+        }
+      }
+    ],
     "snakeCanAppear": true
   },
   {
@@ -93,7 +108,7 @@
     "backgrounds": {
       "morning": "assets/bg/eunhaesa_morning.png"
     },
-    "lodging": false,
+    "lodging": true,
     "connections": [
       {
         "toPlaceId": "cityhall",
@@ -134,6 +149,28 @@
       {
         "toPlaceId": "bohyeonsan",
         "travelCost": 30
+      },
+      {
+        "toPlaceId": "cave",
+        "travelCost": 30,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "flagEquals",
+              "key": "found_cave",
+              "value": true
+            },
+            {
+              "type": "hasItem",
+              "itemId": "dog"
+            },
+            {
+              "type": "dayEquals",
+              "day": 3
+            }
+          ]
+        }
       }
     ],
     "activities": [
@@ -239,7 +276,7 @@
       }
     ],
     "activities": [],
-    "snakeCanAppear": true
+    "snakeCanAppear": false
   },
   {
     "id": "hanui",
@@ -288,10 +325,19 @@
         "travelCost": 30
       }
     ],
-    "activities": [],
+    "activities": [
+      {
+        "id": "cross_bridge",
+        "name": "출렁다리 건너기",
+        "durationMinutes": 30
+      }
+    ],
     "snakeCanAppear": false,
-    "openFrom": 1020,
-    "snakeFixedFrom": 1200
+    "snakeFixedFrom": 1200,
+    "operatingHours": {
+      "from": 540,
+      "to": 1020
+    }
   },
   {
     "id": "zipline",
@@ -306,9 +352,34 @@
         "travelCost": 30
       }
     ],
-    "activities": [],
+    "activities": [
+      {
+        "id": "ride_zipline",
+        "name": "짚라인 타기",
+        "durationMinutes": 30
+      }
+    ],
     "snakeCanAppear": false,
-    "openFrom": 1020,
-    "snakeFixedFrom": 1200
+    "snakeFixedFrom": 1200,
+    "operatingHours": {
+      "from": 540,
+      "to": 1020
+    }
+  },
+  {
+    "id": "cave",
+    "name": "지네 동굴",
+    "backgrounds": {
+      "morning": "assets/bg/cave_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "bonglimsa",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": false
   }
 ]

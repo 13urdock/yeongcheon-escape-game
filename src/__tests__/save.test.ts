@@ -46,6 +46,6 @@ describe('실제 콘텐츠(content/*.json)', () => {
   it('검증을 통과한다', () => {
     const real = loadContent();
     expect(collectContentProblems(real)).toEqual([]);
-    expect(Object.keys(real.places)).toHaveLength(12);
+    expect(Object.keys(real.places)).toHaveLength(13); // 12곳 + 지네 동굴
   });
 });

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "companion",
+    "placeIds": [
+      "dolhalmae",
+      "winery",
+      "bohyeonsan",
+      "bonglimsa",
+      "imgo",
+      "bridge",
+      "zipline"
+    ],
+    "chance": 0.2,
+    "pityAfter": 2,
+    "requires": {
+      "type": "companionIs",
+      "companion": null
+    },
+    "scenes": [
+      {
+        "id": "dog_encounter",
+        "isEnding": false,
+        "normalText": "[TODO] 어디선가 강아지 한 마리가 다가와 꼬리를 흔든다.",
+        "choices": [
+          {
+            "id": "dog_take",
+            "text": "강아지를 데리고 간다",
+            "isTrap": false,
+            "effects": [
+              {
+                "type": "addItem",
+                "itemId": "dog"
+              },
+              {
+                "type": "setCompanion",
+                "companion": "dog"
+              }
+            ],
+            "nextSceneId": "$arrival"
+          },
+          {
+            "id": "dog_leave",
+            "text": "두고 간다",
+            "isTrap": false,
+            "nextSceneId": "$arrival"
+          }
+        ]
+      },
+      {
+        "id": "cat_encounter",
+        "isEnding": false,
+        "normalText": "[TODO] 고양이 한 마리가 조용히 발치에 앉는다.",
+        "choices": [
+          {
+            "id": "cat_take",
+            "text": "고양이를 데리고 간다",
+            "isTrap": false,
+            "effects": [
+              {
+                "type": "addItem",
+                "itemId": "cat"
+              },
+              {
+                "type": "setCompanion",
+                "companion": "cat"
+              }
+            ],
+            "nextSceneId": "$arrival"
+          },
+          {
+            "id": "cat_leave",
+            "text": "두고 간다",
+            "isTrap": false,
+            "nextSceneId": "$arrival"
+          }
+        ]
+      }
+    ]
+  }
+]

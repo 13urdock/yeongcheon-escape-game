@@ -58,3 +58,10 @@ export function checkLodgingDeadline(state: GameState, content: GameContent): bo
   }
   return true;
 }
+
+// 장소의 활동 운영 시간 밖인지. operatingHours가 없으면 항상 false(상시 운영).
+// from 이상 to 미만이 운영 중. 부작용 없음.
+export function isOutsideHours(place: { operatingHours?: { from: number; to: number } }, timeMinutes: number): boolean {
+  const h = place.operatingHours;
+  return h !== undefined && (timeMinutes < h.from || timeMinutes >= h.to);
+}

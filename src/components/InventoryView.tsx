@@ -1,41 +1,39 @@
-// components/InventoryView.tsx — 마인크래프트식 아이템 슬롯. 탭하면 useItem, 결과 문구 표시.
+// components/InventoryView.tsx — 가방 페이지(마인크래프트식 칸). 팝업이 아니라 이야기 화면 자리를 대신한다.
+// 칸을 누르면 지금 있는 곳에서 그 아이템을 쓰고 이야기 화면으로 돌아간다(결과는 스토리 영역에 붙음).
 import type { GameContent, GameState } from '../types';
 
 interface Props {
   state: GameState;
   content: GameContent;
-  resultText: string;
   onUse: (itemId: string) => void;
-  onClose: () => void;
 }
 
-const SLOT_COUNT = 8;
+const COLS = 4;
+const MIN_SLOTS = 8;
 
-export function InventoryView({ state, content, resultText, onUse, onClose }: Props) {
-  const slots = Array.from({ length: Math.max(SLOT_COUNT, state.items.length) }, (_, i) => state.items[i]);
+export function InventoryView({ state, content, onUse }: Props) {
+  const count = Math.max(MIN_SLOTS, Math.ceil(state.items.length / COLS) * COLS);
+  const slots = Array.from({ length: count }, (_, i) => state.items[i]);
+  const companion = state.companion === 'dog' ? '강아지' : state.companion === 'cat' ? '고양이' : '없음';
   return (
-    <div className="inventory-backdrop" onClick={onClose}>
-      <div className="inventory" onClick={(e) => e.stopPropagation()}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-          <strong>가방</strong>
-          <span style={{ color: 'var(--muted)' }}>동행: {state.companion === 'dog' ? '강아지' : state.companion === 'cat' ? '고양이' : '없음'}</span>
-        </div>
-        <div className="inventory-grid">
-          {slots.map((id, i) => {
-            if (!id) return <div key={i} className="slot empty">—</div>;
-            const item = content.items[id];
-            const isCompanion = item?.category === 'companion';
-            return (
-              <button key={id} className={`slot${isCompanion ? ' companion' : ''}`} onClick={() => onUse(id)} title={item?.description}>
-                {item?.icon ? <img className="pixel" src={item.icon} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} /> : <span className="icon-fallback">▣</span>}
-                <span>{item?.name ?? id}</span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="result">{resultText}</div>
-        <button style={{ width: '100%', textAlign: 'center', marginTop: 8 }} onClick={onClose}>닫기</button>
+    <main className="page bag">
+      <div className="bag-head">
+        <h2>가방</h2>
+        <span>동행: {companion}</span>
       </div>
-    </div>
+      <div className="bag-grid">
+        {slots.map((id, i) => {
+          if (!id) return <div key={`empty-${i}`} className="slot empty" />;
+          const item = content.items[id];
+          return (
+            <button key={id} className="slot" onClick={() => onUse(id)}>
+              {item?.icon && <img className="pixel" src={item.icon} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />}
+              <span>{item?.name ?? id}</span>
+            </button>
+          );
+        })}
+      </div>
+      <p className="bag-hint">아이템을 누르면 지금 있는 곳에서 써 본다.</p>
+    </main>
   );
 }

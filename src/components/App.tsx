@@ -1,4 +1,4 @@
-// components/App.tsx — 화면 라우팅(시작 → 플레이 → 엔딩) + 콘텐츠 로드 오류 표시
+// components/App.tsx — 화면 라우팅(시작 → 플레이 → 엔딩) + 콘텐츠 로드 오류 표시. 팝업 없음: 가방도 페이지로 전환.
 import { useMemo, useState } from 'react';
 import { loadContent } from '../content';
 import { useGame } from '../hooks/useGame';
@@ -7,7 +7,7 @@ import { StartScreen } from './StartScreen';
 import { SceneView } from './SceneView';
 import { HUD } from './HUD';
 import { InventoryView } from './InventoryView';
-import { EffectOverlay } from './EffectOverlay';
+import { BottomBar } from './BottomBar';
 import { EndingView } from './EndingView';
 
 export function App() {
@@ -16,52 +16,44 @@ export function App() {
     try { return { content: loadContent() }; } catch (e) { return { error: (e as Error).message }; }
   }, []);
   if (loaded.error || !loaded.content) {
-    return <div className="screen"><pre className="scene-text" style={{ color: '#e5533d' }}>{loaded.error}</pre></div>;
+    return <div className="screen"><pre className="load-error">{loaded.error}</pre></div>;
   }
   return <Game content={loaded.content} />;
 }
 
 function Game({ content }: { content: GameContent }) {
   const g = useGame(content);
-  const [inventoryOpen, setInventoryOpen] = useState(false);
-  const [useResult, setUseResult] = useState<string>('');
+  const [bagOpen, setBagOpen] = useState(false);
 
   if (g.phase === 'start') {
-    return <StartScreen canContinue={g.canContinue} onContinue={g.continueGame} onNew={g.startNew} onReset={g.resetAll} />;
+    return <StartScreen canContinue={g.canContinue} onContinue={g.continueGame} onNew={g.startNew} />;
   }
   if (g.phase === 'ending' && g.ending) {
-    return <EndingView ending={g.ending} onRestart={g.resetAll} />;
+    return <EndingView ending={g.ending} onRestart={() => { setBagOpen(false); g.restart(); }} />;
   }
   if (!g.state || !g.view) return null;
 
   return (
-    <div className="screen">
-      <HUD state={g.state} placeName={g.view.placeName} />
-      <SceneView
-        view={g.view}
-        state={g.state}
-        edges={g.edges}
-        activities={g.activities}
-        message={g.message}
-        extraText={g.extraText}
-        onChoose={g.choose}
-        onTravel={g.travel}
-        onActivity={g.activity}
-      />
-      <div className="toolbar">
-        <button onClick={() => { setUseResult(''); setInventoryOpen(true); }}>가방 ({g.state.items.length})</button>
-        <button className="danger" onClick={() => { if (confirm('처음부터 다시 시작할까요? 진행 상황이 지워집니다.')) g.resetAll(); }}>초기화</button>
-      </div>
-      {inventoryOpen && (
+    <div className="screen with-bar">
+      <HUD state={g.state} />
+      {bagOpen ? (
         <InventoryView
           state={g.state}
           content={content}
-          resultText={useResult}
-          onUse={(id) => setUseResult(g.use(id))}
-          onClose={() => setInventoryOpen(false)}
+          onUse={(id) => { setBagOpen(false); g.use(id); }}
+        />
+      ) : (
+        <SceneView
+          view={g.view}
+          edges={g.edges}
+          activities={g.activities}
+          notes={g.notes}
+          onChoose={g.choose}
+          onTravel={g.travel}
+          onActivity={g.activity}
         />
       )}
-      <EffectOverlay messages={g.overlays} onDone={g.popOverlay} />
+      <BottomBar bagOpen={bagOpen} itemCount={g.state.items.length} onToggleBag={() => setBagOpen((o) => !o)} />
     </div>
   );
 }

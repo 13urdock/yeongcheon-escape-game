@@ -10,3 +10,4 @@ export * from './save';
 export * from './scene';
 export * from './choice';
 export * from './item';
+export * from './encounter';

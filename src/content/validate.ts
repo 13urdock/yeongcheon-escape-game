@@ -27,11 +27,19 @@ export function collectContentProblems(content: GameContent): string[] {
       if (!back) p.push(`place '${place.id}' → '${e.toPlaceId}' 역방향 edge 없음`);
       if (e.requires) checkCondition(e.requires, `place '${place.id}' edge→${e.toPlaceId}`, content, p);
     }
+    if (place.operatingHours && place.operatingHours.from >= place.operatingHours.to) p.push(`place '${place.id}': operatingHours from >= to`);
     for (const a of place.activities) {
       if (a.durationMinutes < 0) p.push(`activity '${a.id}': durationMinutes 음수`);
       if (a.requires) checkCondition(a.requires, `activity '${a.id}'`, content, p);
       checkEffects(a.effects, `activity '${a.id}'`, content, p);
     }
+  }
+
+  // 무작위 만남
+  for (const enc of content.encounters) {
+    if (enc.chance < 0 || enc.chance > 1) p.push(`encounter '${enc.id}': chance는 0~1`);
+    for (const placeId of enc.placeIds) if (!has(content.places, placeId)) p.push(`encounter '${enc.id}': 장소 '${placeId}' 없음`);
+    if (enc.requires) checkCondition(enc.requires, `encounter '${enc.id}'`, content, p);
   }
 
   // 씬
@@ -43,6 +51,10 @@ export function collectContentProblems(content: GameContent): string[] {
       else endingTypes.add(s.endingType);
       if (s.choices.length > 0) p.push(`scene '${s.id}': 엔딩 씬은 choices가 비어야 함`);
     }
+    // 진입 씬이 아니면 이동 목록이 안 보이므로, 선택지가 없으면 막다른 길이 된다
+    const place = content.places[s.placeId];
+    const isEntry = place !== undefined && s.id === (place.entrySceneId ?? `${place.id}_arrival`);
+    if (!s.isEnding && !isEntry && s.choices.length === 0) p.push(`scene '${s.id}': 진입 씬이 아니므로 choices가 1개 이상 필요 (이동 목록이 보이지 않음)`);
     if (s.triggerCondition) checkCondition(s.triggerCondition, `scene '${s.id}' trigger`, content, p);
     for (const c of [...s.choices, ...(s.snakeChoices ?? [])]) checkChoice(c, s.id, content, p);
   }

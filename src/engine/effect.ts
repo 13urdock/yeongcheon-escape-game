@@ -1,10 +1,11 @@
-// engine/effect.ts — Effect 적용기 + 오버레이 문구 자동 생성. 다음 씬은 결정하지 않는다.
+// engine/effect.ts — Effect 적용기 + 상태 변화 문구 자동 생성. 다음 씬은 결정하지 않는다.
+// (필드 이름은 overlay지만 팝업은 없음 — 문구는 화면의 스토리 영역에 덧붙는다)
 import type { EffectWithOverlay, EndingType, GameContent, GameState } from '../types';
 import { DAY_START_MIN, FLAG_TRAVEL_DISCOUNT, ITEM_CAT, ITEM_DOG, LAST_DAY } from '../constants';
 
 export interface EffectResult {
   state: GameState;
-  overlays: string[];        // 화면에 띄울 팝업 문구(순서대로)
+  overlays: string[];        // 스토리 영역에 덧붙일 상태 변화 문구(순서대로)
   goToSceneId?: string;      // goToScene 효과가 있었으면 그 씬
   wakePlaceId?: string;      // nextDay.wakePlaceId 지정 시
   finished?: true;           // finish 효과 또는 마지막 날 종료 → 호출자가 evaluateEnding 수행

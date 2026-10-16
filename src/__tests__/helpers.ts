@@ -44,6 +44,7 @@ export function makeContent(): GameContent {
         effects: [{ type: 'spendGrapes', amount: 3 }, { type: 'addItem', itemId: 'dog' }], nextSceneId: 'market_arrival' },
     ] }),
     scene('bohyeonsan_arrival', 'bohyeonsan', { snakeText: 'snake', snakeChoices: [{ id: 't', text: 't', isTrap: true, nextSceneId: 'bohyeonsan_arrival' }] }),
+    scene('bohyeonsan_walk', 'bohyeonsan', { choices: [{ id: 'back', text: '돌아간다', isTrap: false, nextSceneId: 'bohyeonsan_arrival' }] }),
     scene('bonglimsa_arrival', 'bonglimsa'),
     scene('bonglimsa_early', 'bonglimsa', { triggerCondition: { type: 'timeBefore', minutes: 540 },
       choices: [{ id: 'e', text: 'e', isTrap: false, effects: [{ type: 'setFlag', key: 'bonglimsa_early', value: true }], nextSceneId: 'bonglimsa_arrival' }] }),

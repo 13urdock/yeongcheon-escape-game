@@ -1,4 +1,4 @@
-// components/EndingView.tsx — 엔딩 타입별 결말 텍스트 + 다시하기
+// components/EndingView.tsx — 엔딩 타입별 결말 텍스트 + 처음으로
 import type { EndingInfo } from '../hooks/useGame';
 import { endingLabel } from '../engine';
 
@@ -11,12 +11,14 @@ const REASON_TEXT: Record<EndingInfo['reason'], string> = {
 export function EndingView({ ending, onRestart }: { ending: EndingInfo; onRestart: () => void }) {
   return (
     <div className="screen">
-      <div className="center">
+      <main className="title-page">
         <h1>{endingLabel(ending.type)}</h1>
         {REASON_TEXT[ending.reason] && <p className="sub">{REASON_TEXT[ending.reason]}</p>}
-        <div className="ending-body">{ending.text}</div>
-        <button className="primary" onClick={onRestart}>처음으로</button>
-      </div>
+        <p className="ending-body">{ending.text}</p>
+        <ul className="choices center">
+          <li><button className="choice" onClick={onRestart}><span className="label">처음으로</span></button></li>
+        </ul>
+      </main>
     </div>
   );
 }
