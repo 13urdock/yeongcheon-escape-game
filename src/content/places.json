@@ -1,0 +1,314 @@
+[
+  {
+    "id": "dolhalmae",
+    "name": "돌할매",
+    "backgrounds": {
+      "morning": "assets/bg/dolhalmae_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": false
+  },
+  {
+    "id": "winery",
+    "name": "와이너리",
+    "backgrounds": {
+      "morning": "assets/bg/winery_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      }
+    ],
+    "activities": [
+      {
+        "id": "wine_tasting",
+        "name": "와인 체험",
+        "durationMinutes": 60,
+        "effects": [
+          {
+            "type": "addGrapes",
+            "amount": 3
+          }
+        ]
+      },
+      {
+        "id": "grape_picking",
+        "name": "포도 따기 (미니게임 자리)",
+        "durationMinutes": 60,
+        "effects": [
+          {
+            "type": "addGrapes",
+            "amount": 5
+          }
+        ]
+      }
+    ],
+    "snakeCanAppear": false
+  },
+  {
+    "id": "bohyeonsan",
+    "name": "보현산",
+    "backgrounds": {
+      "morning": "assets/bg/bohyeonsan_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "bonglimsa",
+        "travelCost": 30,
+        "requires": {
+          "type": "flagEquals",
+          "key": "found_bonglimsa",
+          "value": true
+        }
+      },
+      {
+        "toPlaceId": "bridge",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "zipline",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "eunhaesa",
+    "name": "은해사",
+    "backgrounds": {
+      "morning": "assets/bg/eunhaesa_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "chwihari",
+    "name": "취하리 청년마을",
+    "backgrounds": {
+      "morning": "assets/bg/chwihari_morning.png"
+    },
+    "lodging": true,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "hanui",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "bonglimsa",
+    "name": "봉림사",
+    "backgrounds": {
+      "morning": "assets/bg/bonglimsa_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "bohyeonsan",
+        "travelCost": 30
+      }
+    ],
+    "activities": [
+      {
+        "id": "pray",
+        "name": "예불 드리기",
+        "durationMinutes": 60,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "prayed_at_bonglimsa",
+            "value": true
+          }
+        ]
+      },
+      {
+        "id": "help_monks",
+        "name": "스님 일 돕기",
+        "durationMinutes": 90,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "helped_monks",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "snakeCanAppear": true,
+    "openFrom": 300
+  },
+  {
+    "id": "imgo",
+    "name": "임고서원",
+    "backgrounds": {
+      "morning": "assets/bg/imgo_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "market",
+    "name": "시장",
+    "backgrounds": {
+      "morning": "assets/bg/market_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 0
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "cityhall",
+    "name": "시청",
+    "backgrounds": {
+      "morning": "assets/bg/cityhall_morning.png"
+    },
+    "lodging": true,
+    "connections": [
+      {
+        "toPlaceId": "market",
+        "travelCost": 0
+      },
+      {
+        "toPlaceId": "dolhalmae",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "winery",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "chwihari",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "eunhaesa",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "bohyeonsan",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "imgo",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "hanui",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "hanui",
+    "name": "한의마을",
+    "backgrounds": {
+      "morning": "assets/bg/hanui_morning.png"
+    },
+    "lodging": true,
+    "connections": [
+      {
+        "toPlaceId": "cityhall",
+        "travelCost": 30
+      },
+      {
+        "toPlaceId": "chwihari",
+        "travelCost": 30
+      }
+    ],
+    "activities": [
+      {
+        "id": "foot_bath",
+        "name": "족욕 체험",
+        "durationMinutes": 60,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "travel_discount_today",
+            "value": 10,
+            "overlay": "몸이 가벼워졌다. 오늘 이동시간 -10분"
+          }
+        ]
+      }
+    ],
+    "snakeCanAppear": true
+  },
+  {
+    "id": "bridge",
+    "name": "출렁다리",
+    "backgrounds": {
+      "morning": "assets/bg/bridge_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "bohyeonsan",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": false,
+    "openFrom": 1020,
+    "snakeFixedFrom": 1200
+  },
+  {
+    "id": "zipline",
+    "name": "짚라인",
+    "backgrounds": {
+      "morning": "assets/bg/zipline_morning.png"
+    },
+    "lodging": false,
+    "connections": [
+      {
+        "toPlaceId": "bohyeonsan",
+        "travelCost": 30
+      }
+    ],
+    "activities": [],
+    "snakeCanAppear": false,
+    "openFrom": 1020,
+    "snakeFixedFrom": 1200
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "stone_grandma",
+    "name": "돌할매",
+    "isSnakeDisguise": false
+  },
+  {
+    "id": "snake",
+    "name": "백사",
+    "isSnakeDisguise": true
+  }
+]

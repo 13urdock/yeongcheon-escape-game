@@ -1,0 +1,579 @@
+[
+  {
+    "id": "dolhalmae_intro",
+    "placeId": "dolhalmae",
+    "isEnding": false,
+    "normalText": "[TODO] 1일차 09:00. 영천에 와인 체험을 하러 온 당신은 돌할매 앞에 서 있다.\n(칠월칠석을 앞둔 2박 3일 여행의 시작)",
+    "choices": [
+      {
+        "id": "intro_lift",
+        "text": "돌을 들어 본다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "lifted_stone",
+            "value": true,
+            "overlay": "돌이… 생각보다 가볍다?"
+          }
+        ],
+        "nextSceneId": "dolhalmae_arrival"
+      },
+      {
+        "id": "intro_skip",
+        "text": "그냥 둘러본다",
+        "isTrap": false,
+        "nextSceneId": "dolhalmae_arrival"
+      }
+    ]
+  },
+  {
+    "id": "dolhalmae_arrival",
+    "placeId": "dolhalmae",
+    "isEnding": false,
+    "normalText": "[TODO] 돌할매 도착 본문 (백사 미등장)",
+    "choices": []
+  },
+  {
+    "id": "winery_arrival",
+    "placeId": "winery",
+    "isEnding": false,
+    "normalText": "[TODO] 와이너리 도착 본문 (백사 미등장)",
+    "choices": []
+  },
+  {
+    "id": "bohyeonsan_arrival",
+    "placeId": "bohyeonsan",
+    "isEnding": false,
+    "normalText": "[TODO] 보현산 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 보현산 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "bohyeonsan_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "bohyeonsan_arrival"
+      },
+      {
+        "id": "bohyeonsan_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_bohyeonsan",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "bohyeonsan_arrival"
+      }
+    ]
+  },
+  {
+    "id": "eunhaesa_arrival",
+    "placeId": "eunhaesa",
+    "isEnding": false,
+    "normalText": "[TODO] 은해사 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 은해사 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "eunhaesa_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "eunhaesa_arrival"
+      },
+      {
+        "id": "eunhaesa_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_eunhaesa",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "eunhaesa_arrival"
+      }
+    ]
+  },
+  {
+    "id": "chwihari_arrival",
+    "placeId": "chwihari",
+    "isEnding": false,
+    "normalText": "[TODO] 취하리 청년마을 도착 본문 (백사 미등장)",
+    "choices": [
+      {
+        "id": "chwihari_sleep",
+        "text": "여기서 하룻밤 묵는다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "nextDay"
+          }
+        ],
+        "nextSceneId": "chwihari_arrival"
+      },
+      {
+        "id": "chwihari_dawn_plan",
+        "text": "내일 새벽 은해사 예불에 가기로 하고 일찍 잔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "nextDay",
+            "wakeMinutes": 300,
+            "wakePlaceId": "eunhaesa"
+          },
+          {
+            "type": "setFlag",
+            "key": "attended_dawn_prayer",
+            "value": true
+          }
+        ],
+        "nextSceneId": "eunhaesa_arrival"
+      }
+    ],
+    "snakeText": "[TODO] 취하리 청년마을 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "chwihari_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "chwihari_arrival"
+      },
+      {
+        "id": "chwihari_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_chwihari",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "chwihari_arrival"
+      }
+    ]
+  },
+  {
+    "id": "bonglimsa_arrival",
+    "placeId": "bonglimsa",
+    "isEnding": false,
+    "normalText": "[TODO] 봉림사 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 봉림사 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "bonglimsa_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "bonglimsa_arrival"
+      },
+      {
+        "id": "bonglimsa_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_bonglimsa",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "bonglimsa_arrival"
+      }
+    ]
+  },
+  {
+    "id": "imgo_arrival",
+    "placeId": "imgo",
+    "isEnding": false,
+    "normalText": "[TODO] 임고서원 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 임고서원 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "imgo_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "imgo_arrival"
+      },
+      {
+        "id": "imgo_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_imgo",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "imgo_arrival"
+      }
+    ]
+  },
+  {
+    "id": "market_arrival",
+    "placeId": "market",
+    "isEnding": false,
+    "normalText": "[TODO] 시장 도착 본문 (백사 미등장)",
+    "choices": [
+      {
+        "id": "market_buy_dog",
+        "text": "강아지를 데려간다 (포도알 3)",
+        "isTrap": false,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "grapesGte",
+              "amount": 3
+            },
+            {
+              "type": "notItem",
+              "itemId": "dog"
+            },
+            {
+              "type": "notItem",
+              "itemId": "cat"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 3
+          },
+          {
+            "type": "addItem",
+            "itemId": "dog"
+          },
+          {
+            "type": "setCompanion",
+            "companion": "dog"
+          }
+        ],
+        "nextSceneId": "market_arrival"
+      },
+      {
+        "id": "market_buy_telescope",
+        "text": "망원경을 산다 (포도알 2)",
+        "isTrap": false,
+        "requires": {
+          "type": "and",
+          "conditions": [
+            {
+              "type": "grapesGte",
+              "amount": 2
+            },
+            {
+              "type": "notItem",
+              "itemId": "telescope"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "spendGrapes",
+            "amount": 2
+          },
+          {
+            "type": "addItem",
+            "itemId": "telescope"
+          }
+        ],
+        "nextSceneId": "market_arrival"
+      }
+    ],
+    "snakeText": "[TODO] 시장 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "market_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "market_arrival"
+      },
+      {
+        "id": "market_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_market",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "market_arrival"
+      }
+    ]
+  },
+  {
+    "id": "cityhall_arrival",
+    "placeId": "cityhall",
+    "isEnding": false,
+    "normalText": "[TODO] 시청 도착 본문 (백사 미등장)",
+    "choices": [
+      {
+        "id": "cityhall_sleep",
+        "text": "여기서 하룻밤 묵는다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "nextDay"
+          }
+        ],
+        "nextSceneId": "cityhall_arrival"
+      },
+      {
+        "id": "cityhall_final",
+        "text": "[TODO] 칠석 밤이 온다 — 최종 국면으로",
+        "isTrap": false,
+        "requires": {
+          "type": "dayEquals",
+          "day": 3
+        },
+        "effects": [
+          {
+            "type": "finish"
+          }
+        ]
+      }
+    ],
+    "snakeText": "[TODO] 시청 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "cityhall_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "cityhall_arrival"
+      },
+      {
+        "id": "cityhall_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_cityhall",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "cityhall_arrival"
+      }
+    ]
+  },
+  {
+    "id": "hanui_arrival",
+    "placeId": "hanui",
+    "isEnding": false,
+    "normalText": "[TODO] 한의마을 도착 본문 (백사 미등장)",
+    "choices": [
+      {
+        "id": "hanui_sleep",
+        "text": "여기서 하룻밤 묵는다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "nextDay"
+          }
+        ],
+        "nextSceneId": "hanui_arrival"
+      }
+    ],
+    "snakeText": "[TODO] 한의마을 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "hanui_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "hanui_arrival"
+      },
+      {
+        "id": "hanui_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_hanui",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "hanui_arrival"
+      }
+    ]
+  },
+  {
+    "id": "bridge_arrival",
+    "placeId": "bridge",
+    "isEnding": false,
+    "normalText": "[TODO] 출렁다리 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 출렁다리 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "bridge_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "bridge_arrival"
+      },
+      {
+        "id": "bridge_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_bridge",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "bridge_arrival"
+      }
+    ]
+  },
+  {
+    "id": "zipline_arrival",
+    "placeId": "zipline",
+    "isEnding": false,
+    "normalText": "[TODO] 짚라인 도착 본문 (백사 미등장)",
+    "choices": [],
+    "snakeText": "[TODO] 짚라인 도착 본문 (백사 등장 — 텍스트에 단서를 박아둘 것)",
+    "snakeChoices": [
+      {
+        "id": "zipline_snake_use",
+        "text": "[TODO] 그 사람의 시설/제안을 이용한다",
+        "isTrap": true,
+        "nextSceneId": "zipline_arrival"
+      },
+      {
+        "id": "zipline_snake_notice",
+        "text": "[TODO] 뭔가 이상하다… 거리를 둔다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "noticed_snake_zipline",
+            "value": true,
+            "overlay": "단서를 알아챘다"
+          }
+        ],
+        "nextSceneId": "zipline_arrival"
+      }
+    ]
+  },
+  {
+    "id": "bonglimsa_early_event",
+    "placeId": "bonglimsa",
+    "isEnding": false,
+    "triggerCondition": {
+      "type": "timeBefore",
+      "minutes": 540
+    },
+    "normalText": "[TODO] 아직 해도 다 뜨지 않은 봉림사. 스님들이 아침 일을 준비하고 있다.",
+    "choices": [
+      {
+        "id": "bonglimsa_early_help",
+        "text": "일을 돕겠다고 나선다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "bonglimsa_early",
+            "value": true
+          },
+          {
+            "type": "setFlag",
+            "key": "helped_monks",
+            "value": true
+          },
+          {
+            "type": "advanceTime",
+            "minutes": 90
+          }
+        ],
+        "nextSceneId": "bonglimsa_monk_story"
+      },
+      {
+        "id": "bonglimsa_early_watch",
+        "text": "조용히 지켜본다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "bonglimsa_early",
+            "value": true
+          }
+        ],
+        "nextSceneId": "bonglimsa_arrival"
+      }
+    ]
+  },
+  {
+    "id": "bonglimsa_monk_story",
+    "placeId": "bonglimsa",
+    "isEnding": false,
+    "normalText": "[TODO] 일을 마친 스님이 차를 내주며 칠석의 백사 이야기를 들려준다.",
+    "choices": [
+      {
+        "id": "monk_story_listen",
+        "text": "이야기를 끝까지 듣는다",
+        "isTrap": false,
+        "effects": [
+          {
+            "type": "setFlag",
+            "key": "heard_monk_story",
+            "value": true
+          }
+        ],
+        "nextSceneId": "bonglimsa_arrival"
+      }
+    ]
+  },
+  {
+    "id": "ending_bad",
+    "placeId": "cityhall",
+    "isEnding": true,
+    "endingType": "bad",
+    "normalText": "[TODO] 배드엔딩 — 백사에게 홀려 승천의 제물이 되었다.",
+    "choices": []
+  },
+  {
+    "id": "ending_normal",
+    "placeId": "cityhall",
+    "isEnding": true,
+    "endingType": "normal",
+    "normalText": "[TODO] 노멀엔딩 — 강아지 덕에 위기를 넘겼지만, 백사는 이듬해 다시 나타난다.",
+    "choices": []
+  },
+  {
+    "id": "ending_happy",
+    "placeId": "cityhall",
+    "isEnding": true,
+    "endingType": "happy",
+    "normalText": "[TODO] 해피엔딩 — 동굴에서 백사를 물리쳤다.",
+    "choices": []
+  },
+  {
+    "id": "ending_hidden",
+    "placeId": "cityhall",
+    "isEnding": true,
+    "endingType": "hidden",
+    "normalText": "[TODO] 히든엔딩 — 봉림사 스님의 이야기로 백사의 한을 풀어주었다.",
+    "choices": []
+  }
+]

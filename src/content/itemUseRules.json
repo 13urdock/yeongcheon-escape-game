@@ -1,0 +1,16 @@
+[
+  {
+    "id": "telescope_at_bohyeonsan",
+    "itemId": "telescope",
+    "placeId": "bohyeonsan",
+    "resultText": "망원경 너머, 산자락에 작은 절이 보인다. 봉림사다.",
+    "effects": [
+      {
+        "type": "setFlag",
+        "key": "found_bonglimsa",
+        "value": true,
+        "overlay": "봉림사를 발견했다"
+      }
+    ]
+  }
+]

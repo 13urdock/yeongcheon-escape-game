@@ -1,0 +1,16 @@
+[
+  {
+    "id": "example_by_trust",
+    "cases": [
+      {
+        "when": {
+          "type": "flagGte",
+          "key": "trust_yeongcheon",
+          "value": 3
+        },
+        "then": "cityhall_arrival"
+      }
+    ],
+    "fallback": "cityhall_arrival"
+  }
+]

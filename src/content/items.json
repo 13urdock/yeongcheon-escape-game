@@ -1,0 +1,55 @@
+[
+  {
+    "id": "telescope",
+    "name": "망원경",
+    "description": "멀리 있는 것을 볼 수 있다.",
+    "icon": "assets/items/telescope.png",
+    "category": "tool",
+    "price": 2
+  },
+  {
+    "id": "dog",
+    "name": "강아지",
+    "description": "든든한 동행. 고양이와 함께 데리고 다닐 수 없다.",
+    "icon": "assets/items/dog.png",
+    "category": "companion",
+    "price": 3,
+    "blocksItems": [
+      "cat"
+    ]
+  },
+  {
+    "id": "cat",
+    "name": "고양이",
+    "description": "조용한 동행. 강아지와 함께 데리고 다닐 수 없다.",
+    "icon": "assets/items/cat.png",
+    "category": "companion",
+    "price": 3,
+    "blocksItems": [
+      "dog"
+    ]
+  },
+  {
+    "id": "car_rental",
+    "name": "렌터카",
+    "description": "모든 이동이 10분으로 줄어든다.",
+    "category": "tool",
+    "price": 5
+  },
+  {
+    "id": "salt",
+    "name": "소금",
+    "description": "[TODO]",
+    "category": "consumable",
+    "consumable": true,
+    "price": 1
+  },
+  {
+    "id": "red_bean",
+    "name": "팥",
+    "description": "[TODO]",
+    "category": "consumable",
+    "consumable": true,
+    "price": 1
+  }
+]
